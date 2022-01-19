@@ -1,25 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('./layout/boilerplate') %>
+  <h1 class="fw-lighter">All Campgrounds</h1>
+  <% for(let c of campgrounds){ %>
+    <div class="card mb-3">
+      <div class="row">
+        <div class="col-md-4">
+          <img class="img-fluid" src="<%=c.image%>" alt="basecamp image">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h4 class="card-title">
+              <%=c.title%>
+            </h4>
+            <h6 class="fst-italic">₹ <%=c.price %>
+            </h6>
+            <p class="card-text">
+              <%=c.description%>
+            </p>
+            <p class="card-text fw-bold">
+             -<%=c.location%>
+            </p>
+            <a href="/campgrounds/<%=c._id%>" class="btn btn-primary"> View More</a>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Camps</title>
-</head>
+          </div>
+        </div>
+      </div>
 
-<body>
-  <h1>All Campgrounds</h1>
-  <a href="/campgrounds/new">Create-New-Camprounds</a>
-  <ul>
-    <% for(let c of campgrounds){ %>
-      <li>
-        <a href="/campgrounds/<%=c._id%>">
-          <%= c.title %>
-        </a>
-      </li>
-      <% } %>
-  </ul>
-</body>
-
-</html>
+    </div>
+    <% } %>
