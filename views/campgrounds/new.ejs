@@ -3,33 +3,63 @@
   <div class="row">
     <h1 class="text-center">Create Camp</h1>
     <div class="col-6 offset-3">
-      <form action="/campgrounds" method="POST">
+      <form action="/campgrounds" method="POST" novalidate class="needs-validation">
 
         <div class="mb-3">
           <label for="title" class="form-label ">Title</label>
-          <input type="text" class="form-control" id="title" name="campground[title]">
+          <input type="text" class="form-control" id="title" name="campground[title]" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please Seclect a Title.
+          </div>
         </div>
 
         <div class="mb-3">
           <label for="location" class="form-label">Location</label>
-          <input type="text" class="form-control" id="location" name="campground[location]">
+          <input type="text" class="form-control" id="location" name="campground[location]" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please select a valid state / City
+          </div>
         </div>
 
         <label for="image" class="form-label">Image URL</label>
         <div class="input-group mb-3">
           <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-          <input type="text" name="campground[image]" class="form-control" id="image">
+          <input type="text" name="campground[image]" class="form-control" id="image" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please Choose an Image
+          </div>
         </div>
 
         <label for="price" class="form-label">Price</label>
         <div class="input-group mb-3">
           <span class="input-group-text">₹</span>
-          <input type="number" class="form-control" id="price" name="campground[price]">
+          <input type="number" class="form-control" id="price" name="campground[price]" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please Enter a Price
+          </div>
         </div>
 
         <label for="description">Description</label>
-        <textarea name="campground[description]" id="description" cols="30" rows="5" placeholder="Description"
-          class="form-control"> </textarea>
+        <textarea name="campground[description]" id="description" cols="30" rows="5" class="form-control"
+          required></textarea>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please Input proper Description
+        </div>
 
         <div class="d-grid gap-2">
           <button type="submit" class="btn btn-success mt-3">Add Campground</button>
@@ -38,3 +68,24 @@
       </form>
     </div>
   </div>
+
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+      // Loop over them and prevent submission
+      Array.from(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>

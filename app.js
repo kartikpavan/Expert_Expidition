@@ -10,7 +10,6 @@ mongoose
   .connect("mongodb://localhost:27017/hillsideCreek")
   .then(() => {
     console.log("MongoDb Connection Established");
-    
   })
   .catch((err) => {
     console.log("oh uh !! something went wrong");
@@ -38,10 +37,14 @@ app.get("/campgrounds/new", (req, res) => {
   res.render("campgrounds/new");
 });
 
-app.post("/campgrounds", async (req, res) => {
-  const campground = new Campground(req.body.campground);
-  await campground.save();
-  res.redirect(`/campgrounds/${campground._id}`);
+app.post("/campgrounds", async (req, res, next) => {
+  try {
+    const campground = new Campground(req.body.campground);
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`);
+  } catch (e) {
+    next(e);
+  }
 });
 
 app.get("/campgrounds/:id", async (req, res) => {
@@ -58,9 +61,7 @@ app.get("/campgrounds/:id/edit", async (req, res) => {
 
 app.put("/campgrounds/:id", async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(id, {
-    ...req.body.campground,
-  });
+  const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
   res.redirect(`/campgrounds/${campground._id}`);
 });
 
@@ -69,6 +70,11 @@ app.delete("/campgrounds/:id", async (req, res) => {
   await Campground.findByIdAndDelete(id);
   res.redirect("/campgrounds");
 });
+
+
+app.use((err,req,res,next)=>{
+  res.send("Something Went Wrong")
+})
 
 app.listen(3000, () => {
   console.log("Listening on PORT 3000");

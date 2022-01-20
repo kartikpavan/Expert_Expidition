@@ -1,22 +1,27 @@
 <% layout('./layout/boilerplate') %>
 
-<div class="card mb-10" style="width: 50%; margin:20px auto">
-  <img src="<%=campgrounds.image%>" class="card-img-top" alt="camp-image">
-  <div class="card-body">
-    <h5 class="card-title fw-bold fst-italic"><%=campgrounds.title%> </h5>
-    <p class="card-text"><%=campgrounds.description%></p>
+  <div class="card mb-10" style="width: 50%; margin:20px auto">
+    <img src="<%=campgrounds.image%>" class="card-img-top" alt="camp-image">
+    <div class="card-body">
+      <h5 class="card-title fw-bold fst-italic">
+        <%=campgrounds.title%>
+      </h5>
+      <p class="card-text">
+        <%=campgrounds.description%>
+      </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item fw-lighter fst-italic">₹ <%=campgrounds.price%>
+      </li>
+      <li class="list-group-item fw-bold ">
+        <%=campgrounds.location %>
+      </li>
+    </ul>
+    <div class="card-body">
+      <a href="/campgrounds" class="btn btn-outline-secondary">Back</a>
+      <a href="/campgrounds/<%=campgrounds._id%>/edit" class="btn btn-info">EDIT</a>
+      <form class="d-inline" action="/campgrounds/<%=campgrounds._id%>?_method=delete" method="POST">
+        <button class="btn btn-danger">DELETE</button>
+      </form>
+    </div>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item fw-lighter fst-italic">₹ <%=campgrounds.price%></li>
-    <li class="list-group-item fw-bold "><%=campgrounds.location %></li>
-  </ul>
-  <div class="card-body">
-    <a href="/campgrounds" class="btn btn-outline-secondary">Back</a>
-    <a href="/campgrounds/<%=campgrounds._id%>/edit" class="btn btn-info">EDIT</a>
-    <form class="d-inline" action="/campgrounds/<%=campgrounds._id%>?_method=delete" method="POST">
-      <button class="btn btn-danger">DELETE</button>
-    </form>
-  </div>
-</div>
-  
-      
