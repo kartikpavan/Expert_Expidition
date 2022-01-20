@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const Campground = require("./models/campground");
+const Review = require("./models/review");
 const ejsMate = require("ejs-mate");
 
 mongoose
@@ -49,7 +50,7 @@ app.post("/campgrounds", async (req, res, next) => {
 
 app.get("/campgrounds/:id", async (req, res) => {
   const { id } = req.params;
-  const campgrounds = await Campground.findById(id);
+  const campgrounds = await Campground.findById(id).populate("reviews");
   res.render("campgrounds/show", { campgrounds });
 });
 
@@ -61,7 +62,7 @@ app.get("/campgrounds/:id/edit", async (req, res) => {
 
 app.put("/campgrounds/:id", async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
+  const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
   res.redirect(`/campgrounds/${campground._id}`);
 });
 
@@ -71,10 +72,26 @@ app.delete("/campgrounds/:id", async (req, res) => {
   res.redirect("/campgrounds");
 });
 
+app.post("/campgrounds/:id/reviews", async (req, res) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+  const review = new Review(req.body.review);
+  campground.reviews.push(review);
+  await review.save();
+  await campground.save();
+  res.redirect(`/campgrounds/${campground._id}`);
+});
 
-app.use((err,req,res,next)=>{
-  res.send("Something Went Wrong")
-})
+app.delete("/campgrounds/:id/reviews/:reviewId", async (req, res) => {
+  const { id, reviewId } = req.params;
+  await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/campgrounds/${id}`);
+});
+
+// app.use((err, req, res, next) => {
+//   res.send("Something Went Wrong");
+// });
 
 app.listen(3000, () => {
   console.log("Listening on PORT 3000");
