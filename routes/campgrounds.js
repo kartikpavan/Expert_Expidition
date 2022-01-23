@@ -9,6 +9,10 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/new", (req, res) => {
+  // if (!req.isAuthenticated()) {
+  //   req.flash("error", "You must be signed In");
+  //   return res.redirect("/login");
+  // }
   res.render("campgrounds/new");
 });
 
@@ -26,9 +30,9 @@ router.post("/", async (req, res, next) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const campgrounds = await Campground.findById(id).populate("reviews");
-  if(!campgrounds){
-    req.flash('error',"Uh oh , No Camps found ")
-    return res.redirect('/campgrounds')
+  if (!campgrounds) {
+    req.flash("error", "Uh oh , No Camps found ");
+    return res.redirect("/campgrounds");
   }
   res.render("campgrounds/show", { campgrounds });
 });

@@ -4,10 +4,17 @@ const app = express();
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const campgroundsRouter = require("./routes/campgrounds");
-const reviewRouter = require("./routes/reviews");
 const session = require("express-session");
 const flash = require("connect-flash");
+// Passport Js
+const passport = require("passport");
+const localStrategy = require("passport-local");
+// Routes
+const campgroundsRouter = require("./routes/campgrounds");
+const reviewRouter = require("./routes/reviews");
+const userRouter = require("./routes/user");
+
+const User = require("./models/user");
 
 mongoose
   .connect("mongodb://localhost:27017/hillsideCreek")
@@ -44,12 +51,23 @@ app.use((req, res, next) => {
   next();
 });
 
+//PASSPORT MIDDLEWARE
+app.use(passport.initialize());
+app.use(passport.session());
+// We are specifying which strategy will be used by Passport Js
+passport.use(new localStrategy(User.authenticate())); // local Authentication
+// telling passport on how to serialize a USER
+passport.serializeUser(User.serializeUser()); // how to  store USER in SESSION
+passport.deserializeUser(User.deserializeUser()); //  how to get USER out of that session
+
 app.get("/", (req, res) => {
   res.render("home");
 });
 
+
 app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 app.listen(3000, () => {
   console.log("Serving on localhost:3000");
