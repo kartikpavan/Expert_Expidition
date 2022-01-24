@@ -33,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
+//Implementing SESSION
 app.use(
   session({
     secret: "LOL",
@@ -45,11 +46,6 @@ app.use(
   })
 );
 app.use(flash());
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
-});
 
 //PASSPORT MIDDLEWARE
 app.use(passport.initialize());
@@ -60,14 +56,31 @@ passport.use(new localStrategy(User.authenticate())); // local Authentication
 passport.serializeUser(User.serializeUser()); // how to  store USER in SESSION
 passport.deserializeUser(User.deserializeUser()); //  how to get USER out of that session
 
+//GLOBAL MIDDLEWARES
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user; //req.user is available to us by passport js
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
 app.get("/", (req, res) => {
   res.render("home");
 });
 
-
 app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Something Went wrong" } = err;
+  res.status(status).send(message);
+});
+
+app.use((req, res, next) => {
+  res.status(404);
+  next();
+});
 
 app.listen(3000, () => {
   console.log("Serving on localhost:3000");

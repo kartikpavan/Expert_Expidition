@@ -7,6 +7,7 @@
           <h5 class="card-title fw-bold fst-italic">
             <%=campgrounds.title%>
           </h5>
+
           <p class="card-text">
             <%=campgrounds.description%>
           </p>
@@ -17,45 +18,59 @@
           <li class="list-group-item fw-bold ">
             <%=campgrounds.location %>
           </li>
+          <li class="list-group-item fw-lighter fst-italic">By - <%=campgrounds.author.username%>
+          </li>
         </ul>
         <div class="card-body">
           <a href="/campgrounds" class="btn btn-outline-secondary">Back</a>
-          <a href="/campgrounds/<%=campgrounds._id%>/edit" class="btn btn-info">EDIT</a>
-          <form class="d-inline" action="/campgrounds/<%=campgrounds._id%>?_method=delete" method="POST">
-            <button class="btn btn-danger">DELETE</button>
-          </form>
+          <% if(currentUser && campgrounds.author.equals(currentUser)){ %>
+            <a href="/campgrounds/<%=campgrounds._id%>/edit" class="btn btn-info">EDIT</a>
+            <form class="d-inline" action="/campgrounds/<%=campgrounds._id%>?_method=delete" method="POST">
+              <button class="btn btn-danger">DELETE</button>
+            </form>
+            <% } %>
         </div>
       </div>
     </div>
 
     <!-- Review Section -->
-    
+
     <div class="col-6">
-      <form action="/campgrounds/<%=campgrounds._id%>/reviews" method="POST" class="mb-5 mt-3 needs-validation"
-        novalidate>
+      <%if(currentUser) { %>
         <h2>Leave a review</h2>
-        <div class="mb-3">
-          <label for="rating">Rating</label>
-          <input class="form-range" type="range" name="review[rating]" id="rating" min="1" max="5" step="1">
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="body"> Write a Review</label>
-          <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
-          <div class="valid-feedback">Looks good</div>
-        </div>
-        <button class="btn btn-success">Add Review</button>
-      </form>
-      <%for(let review of campgrounds.reviews){ %>
-        <div class="mb-3 card">
-          <div class=" card-body">
-            <h5 class="card-title"> Rating: <%=review.rating %></h5>
-            <p>Review: <%=review.body %></p>
-            <form action="/campgrounds/<%=campgrounds._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
-              <button class="btn btn-sm btn-outline-danger">DELETE</button>
-            </form>
+        <form action="/campgrounds/<%=campgrounds._id%>/reviews" method="POST" class="mb-5 mt-3 needs-validation"
+          novalidate>
+          <div class="mb-3">
+            <label for="rating">Rating</label>
+            <input class="form-range" type="range" name="review[rating]" id="rating" min="1" max="5" step="1">
           </div>
-        </div>
+          <div class="mb-3">
+            <label class="form-label" for="body"> Write a Review</label>
+            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+            <div class="valid-feedback">Looks good</div>
+          </div>
+          <button class="btn btn-success">Add Review</button>
+        </form>
         <% } %>
+          <h4>Reviews by others</h4>
+          <%for(let review of campgrounds.reviews){ %>
+            <div class="mb-3 card">
+              <div class=" card-body">
+                <h5 class="card-title"> Stars: <%=review.rating %>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">By- <%=review.author.username%>
+                </h6>
+
+                <p> <%=review.body %>
+                </p>
+                <%if(currentUser && review.author.equals(currentUser)) { %> 
+                <form action="/campgrounds/<%=campgrounds._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                  <button class="btn btn-sm btn-outline-danger">DELETE</button>
+                </form>
+                <% } %> 
+              </div>
+            </div>
+            <% } %>
     </div>
   </div>
 

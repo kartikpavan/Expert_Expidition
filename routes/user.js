@@ -12,8 +12,11 @@ router.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
     const user = await new User({ username, email });
     const registeredUser = await User.register(user, password);
-    req.flash("success", "Welcome to Yelp Camp");
-    res.redirect("/campgrounds");
+    req.login(registeredUser, (e) => {
+      if (e) return next(e);
+      req.flash("success", `Welcome to Yelp Camp ${req.user.username}`);
+      res.redirect("/campgrounds");
+    });
   } catch (e) {
     // checking unique users get registerd , if same, then flash error
     req.flash("error", e.message);
@@ -32,7 +35,15 @@ const passportMiddleware = passport.authenticate("local", {
 });
 
 router.post("/login", passportMiddleware, (req, res) => {
-  req.flash("success", "Welcome back");
+  req.flash("success", `Welcome back ${req.user.username}`);
+  const redirecturl = req.session.returnTo || "/campgrounds";
+  delete req.session.returnTo;
+  res.redirect(redirecturl);
+});
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", "Successfully Logged you out.");
   res.redirect("/campgrounds");
 });
 
