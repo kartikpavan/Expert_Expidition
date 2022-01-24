@@ -56,6 +56,7 @@ passport.use(new localStrategy(User.authenticate())); // local Authentication
 passport.serializeUser(User.serializeUser()); // how to  store USER in SESSION
 passport.deserializeUser(User.deserializeUser()); //  how to get USER out of that session
 
+
 //GLOBAL MIDDLEWARES
 app.use((req, res, next) => {
   res.locals.currentUser = req.user; //req.user is available to us by passport js
