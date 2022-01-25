@@ -57,5 +57,5 @@ npm install
 ```
 3) start the development server
 ``` bash
-nodemon indes.js
+nodemon app.js
 ```
