@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const path = require("path");
 const app = express();
@@ -56,7 +60,6 @@ passport.use(new localStrategy(User.authenticate())); // local Authentication
 passport.serializeUser(User.serializeUser()); // how to  store USER in SESSION
 passport.deserializeUser(User.deserializeUser()); //  how to get USER out of that session
 
-
 //GLOBAL MIDDLEWARES
 app.use((req, res, next) => {
   res.locals.currentUser = req.user; //req.user is available to us by passport js
@@ -73,15 +76,16 @@ app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-app.use((err, req, res, next) => {
-  const { status = 500, message = "Something Went wrong" } = err;
-  res.status(status).send(message);
-});
+//error handling
+// app.use((err, req, res, next) => {
+//   const { status = 500, message = "Something Went wrong" } = err;
+//   res.status(status).send(message);
+// });
 
-app.use((req, res, next) => {
-  res.status(404);
-  next();
-});
+// app.use((req, res, next) => {
+//   res.status(404);
+//   next();
+// });
 
 app.listen(3000, () => {
   console.log("Serving on localhost:3000");

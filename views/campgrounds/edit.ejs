@@ -3,7 +3,8 @@
   <div class="row">
     <h1 class="text-center">Edit Camp</h1>
     <div class="col-6 offset-3">
-      <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
+      <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="needs-validation"
+        enctype="multipart/form-data">
         <div class="mb-3">
           <label for="title" class="form-label ">Title</label>
           <input type="text" class="form-control" id="title" name="campground[title]" value="<%=campground.title%>"
@@ -23,15 +24,12 @@
 
         </div>
 
-        <label for="image" class="form-label">Image URL</label>
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-          <input type="text" class="form-control" id="image" name="campground[image]" value="<%=campground.image%>"
-            required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
+        <div class="mb-3">
+          <label for="formFileMultiple" class="form-label">Upload image</label>
+          <input class="form-control" type="file" name="image" id="image" multiple>
         </div>
+        <!-- <label for="image" class="form-label">Upload img</label>
+        <input type="file" name="image" id="image" multiple> -->
 
         <label for="price" class="form-label">Price</label>
         <div class="input-group mb-3">
@@ -51,11 +49,20 @@
           Looks good!
         </div>
 
+        <div class="my-3">
+          <% campground.image.forEach((img,i)=>{ %>
+            <img src="<%=img.url%>" height="180px" width="180px" class="img-thumbnail" alt="">
+            <div class="form-check-inline m-0">
+              <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%=img.filename%>">
+            </div>
+            <label for="image-<%=i%>" class="me-2">Delete</label>
+            <% }) %>
+        </div>
 
         <button type="submit" class="btn btn-info mt-3">Edit & Save </button>
 
       </form>
-      <a class="btn btn-secondary mt-3" href="/campgrounds/<%=campground._id%>">Back to <%=campground.title %> </a>
+      <a class="btn btn-secondary my-3" href="/campgrounds/<%=campground._id%>">Back to <%=campground.title %> </a>
     </div>
   </div>
 
