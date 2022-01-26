@@ -19,6 +19,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 * [Node.js]
 * [Express.js]
 * [ejs]
+* [mapbox api]
 * [MongoDb]
 * [Mongoose]
 * [Passport.js]
