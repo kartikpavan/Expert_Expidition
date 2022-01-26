@@ -3,7 +3,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![git1](https://user-images.githubusercontent.com/81632171/151014320-b6de81e9-7268-4f92-8535-901e20e46bd3.png)
+![git 1](https://user-images.githubusercontent.com/81632171/151180661-1eee4be5-559c-44c5-a91b-06438f8fa9f8.png)
 
 This projext is built by me as a learning project related to CAMPING SITES.
 
