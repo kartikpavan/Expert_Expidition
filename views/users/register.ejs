@@ -44,7 +44,10 @@
             </div>
             <a href="#!">Forgot password?</a>
           </div> -->
-
+            <div class="mt-0">
+              <h6>Already have an Account ? <a href="/login" class="fst-italic fw-bold">Login here</a>
+              </h6>
+            </div>
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
 
@@ -64,33 +67,4 @@
     </div>
   </section>
 
-  <script>
-    //show password 
-    function showPassword() {
-      let x = document.getElementById('password')
-      if (x.type === "password") {
-        x.type = "text"
-      } else {
-        x.type = "password"
-      }
-    }
-
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-      'use strict'
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.querySelectorAll('.needs-validation')
-      // Loop over them and prevent submission
-      Array.from(forms)
-        .forEach(function (form) {
-          form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-              event.preventDefault()
-              event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-          }, false)
-        })
-    })()
-  </script>
+  <script src="/js/formValidation"></script>

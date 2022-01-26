@@ -4,7 +4,13 @@
     <div class="card mb-3">
       <div class="row">
         <div class="col-md-4">
-          <img class="img-fluid" src="<%=c.image[0].url%>" alt="basecamp image">
+          <% if(c.image.length){ %>
+            <img class="img-fluid" src="<%=c.image[0].url%>" alt="basecamp image">
+            <% }else{ %>
+              <img
+                src="https://res.cloudinary.com/dzanfytxa/image/upload/c_scale,w_420/v1643202592/hillside-creek/u2q2zzr2pgplndzomuf2.jpg"
+                alt="image">
+              <% } %>
         </div>
         <div class="col-md-8">
           <div class="card-body">
