@@ -17,7 +17,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 async function seedDb() {
   await Campground.deleteMany({});
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 200; i++) {
     // we have 406 cities in cities.js dataset
     const random406 = Math.floor(Math.random() * 406);
     var max = 4999;
@@ -29,7 +29,7 @@ async function seedDb() {
       title: `${sample(descriptors)} ${sample(places)}`,
       description: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris at auctor odio. Etiam porta leo nec lacus volutpat, id elementum orci consequat. Pellentesque vel mauris non dui dignissim laoreet. Fusce sit amet ligula in velit elementum ornare eu non lacus. Sed sed nulla id augue accumsan commodo. Praesent euismod luctus massa ac volutpat. Pellentesque ex nisi, mollis id mi quis, dictum consequat dolor. ",
       price,
-      geometry: { type: "Point", coordinates: [77.68333, 27.48333] },
+      geometry: { type: "Point", coordinates: [cities[random406].lng, cities[random406].lat] },
       image: [
         {
           url: "https://res.cloudinary.com/dzanfytxa/image/upload/v1643120389/hillside-creek/xx8az5jystqzfqzvph40.jpg",
