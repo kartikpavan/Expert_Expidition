@@ -17,11 +17,13 @@ const localStrategy = require("passport-local");
 const campgroundsRouter = require("./routes/campgrounds");
 const reviewRouter = require("./routes/reviews");
 const userRouter = require("./routes/user");
-
 const User = require("./models/user");
+const MongoStore = require("connect-mongo");
 
+//Mongo Atlas(Cloud) Connection
+const dbUrl = process.env.DB_URL;
 mongoose
-  .connect("mongodb://localhost:27017/hillsideCreek")
+  .connect(dbUrl)
   .then(() => {
     console.log("MongoDb Connection Established");
   })
@@ -38,8 +40,10 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 //Implementing SESSION
+
 app.use(
   session({
+    name: "session",
     secret: "LOL",
     resave: false,
     saveUninitialized: true,
@@ -47,7 +51,12 @@ app.use(
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true, // httpOnly helps mitigate the risk of client side script accessing protected cookies
-    },
+    }, 
+    //Mongo-connect -> storing sessions in MONGO Database
+    store: MongoStore.create({
+      mongoUrl: dbUrl,
+      touchAfter: 24 * 3600,
+    }),
   })
 );
 app.use(flash());

@@ -31,10 +31,10 @@ map.on("load", () => {
     paint: {
       // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
       // with three steps to implement three types of circles:
-      //   * Blue, 20px circles when point count is less than 10
-      //   * Yellow, 30px circles when point count is between 10 and 50
-      //   * Pink, 40px circles when point count is greater than or equal to 750
-      "circle-color": ["step", ["get", "point_count"], "#FDEBF7", 5, "#FBCAFF", 10, "#FFADF0", 50, "#FC28FB"],
+      //   * Blue, 20px circles when point count is less than 1
+      //   * Yellow, 30px circles when point count is between 1 and 5
+      //   * Pink, 40px circles when point count is greater than or equal to 10
+      "circle-color": ["step", ["get", "point_count"], "#FDEBF7", 1, "#FBCAFF", 5, "#FFADF0", 10, "#FC28FB"],
       "circle-radius": ["step", ["get", "point_count"], 20, 10, 30, 50, 40],
     },
   });
