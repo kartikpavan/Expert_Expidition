@@ -45,6 +45,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true, // httpOnly helps mitigate the risk of client side script accessing protected cookies
     },
   })

@@ -67,4 +67,14 @@
     </div>
   </section>
 
-  <script src="/js/formValidation"></script>
+  <script>
+    function showPassword() {
+      var x = document.getElementById('password')
+      if (x.type === 'password') {
+        x.type = 'text'
+      } else {
+        x.type = 'password'
+      }
+    }
+  </script>
+  <script src="/js/formValidation.js"></script>
