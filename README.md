@@ -1,9 +1,9 @@
 # hillside-Creek-Campside
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
-
-![git 1](https://user-images.githubusercontent.com/81632171/151180661-1eee4be5-559c-44c5-a91b-06438f8fa9f8.png)
+## About 
+The Project
+![wewewe](https://user-images.githubusercontent.com/81632171/151202607-23787210-ef14-40a5-a157-526b87667dfc.png)
 
 This projext is built by me as a learning project related to CAMPING SITES.
 
@@ -14,7 +14,6 @@ This projext is built by me as a learning project related to CAMPING SITES.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * [Node.js]
 * [Express.js]
@@ -35,12 +34,9 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * npm
   ```sh
   npm install npm@latest -g
