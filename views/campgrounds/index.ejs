@@ -24,7 +24,11 @@
             <h6 class="fst-italic">₹ <%=c.price %>
             </h6>
             <p class="card-text">
-              <%=c.description%>
+              <% if(c.description.length>100){ %>
+                <%= c.description.slice(0,100)%>... <a href="/campgrounds/<%=c._id%>"> Read More </a>
+                  <% } else{ %>
+                    <%=c.description%>
+                      <% } %>
             </p>
             <p class="card-text fw-bold">
               -<%=c.location%>
