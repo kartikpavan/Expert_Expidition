@@ -41,19 +41,21 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 //Implementing SESSION
 
+const secret = process.env.SECRET || "lol";
 app.use(
   session({
     name: "session",
-    secret: "LOL",
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true, // httpOnly helps mitigate the risk of client side script accessing protected cookies
-    }, 
+    },
     //Mongo-connect -> storing sessions in MONGO Database
     store: MongoStore.create({
+      secret,
       mongoUrl: dbUrl,
       touchAfter: 24 * 3600,
     }),
