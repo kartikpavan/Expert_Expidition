@@ -54,5 +54,5 @@ npm install
 ```
 3) start the development server
 ``` bash
-nodemon app.js
+npm run start 
 ```
